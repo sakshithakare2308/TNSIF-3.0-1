@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Game - 3 or 4 Players</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: black;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #FFD700;
+        }
+        .dice-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px;
+            gap: 20px;
+        }
+        .dice {
+            background: #222;
+            border-radius: 10px;
+            padding: 20px;
+            width: 100px;
+            font-size: 2em;
+            color: #FFD700;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #FFD700;
+            color: black;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #ffcc00;
+        }
+        footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #bbb;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🎲 Dice Game 🎲</h1>
+    <p>Select number of players and roll the dice!</p>
+
+    <label for="players">Number of Players:</label>
+    <select id="players">
+        <option value="3">3 Players</option>
+        <option value="4">4 Players</option>
+    </select>
+
+    <br><br>
+    <button onclick="rollDice()">Roll Dice</button>
+
+    <div class="dice-container" id="diceContainer"></div>
+
+    <h2 id="winner"></h2>
+
+    <footer>
+        &copy; 2025 Sakshi Thakre. Built with ❤️ using HTML, CSS & JavaScript.
+    </footer>
+
+    <script>
+        function rollDice() {
+            let numPlayers = parseInt(document.getElementById("players").value);
+            let diceContainer = document.getElementById("diceContainer");
+            let winnerText = document.getElementById("winner");
+            
+            diceContainer.innerHTML = ""; // Clear previous dice
+            let scores = [];
+            
+            // Roll dice for each player
+            for (let i = 1; i <= numPlayers; i++) {
+                let roll = Math.floor(Math.random() * 6) + 1; // 1 to 6
+                scores.push(roll);
+                diceContainer.innerHTML += `<div class="dice">P${i}: 🎲 ${roll}</div>`;
+            }
+            
+            // Find winner
+            let maxScore = Math.max(...scores);
+            let winners = [];
+            for (let i = 0; i < scores.length; i++) {
+                if (scores[i] === maxScore) {
+                    winners.push(`Player ${i + 1}`);
+                }
+            }
+            
+            if (winners.length > 1) {
+                winnerText.innerHTML = `It's a tie between: ${winners.join(", ")}`;
+            } else {
+                winnerText.innerHTML = `${winners[0]} wins! 🏆`;
+            }
+        }
+    </script>
+
+</body>
+</html>
